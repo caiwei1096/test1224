@@ -4,6 +4,13 @@ import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/view/home.vue'
 import Index1 from '@/components/view/index/index.vue'
 import Goods from '@/components/view/goods/goods.vue'
+
+import All from '@/components/view/goodstabs/tab1.vue'
+import Little from '@/components/view/goodstabs/tab2.vue'
+import None from '@/components/view/goodstabs/tab3.vue'
+import Delete from '@/components/view/goodstabs/tab4.vue'
+
+import { ENGINE_METHOD_NONE } from 'constants';
 Vue.use(Router)
 
 export default new Router({
@@ -23,7 +30,29 @@ export default new Router({
        {
           path: '/good',
           name: '商品',
-          component: Goods
+          component: Goods,
+          children:[
+           {
+             path:'/good/all',
+             name:'all',
+             component:All
+           },
+           {
+             path:'/good/little',
+             name:'little',
+             component:Little,
+            },
+            {
+              path:'/good/none',
+              name:'none',
+              component:None,
+            },
+            {
+              path:'/good/delete',
+              name:'delete',
+              component:Delete
+            }
+          ]
       }
       ]
     }]

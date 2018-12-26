@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 <el-row class="container">
- <el-col :span="6" class="main">
+ <el-col :span="20" class="main">
   <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
 				<el-menu 

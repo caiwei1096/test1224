@@ -1,9 +1,10 @@
 <template>
   <div class="hello">
-<el-card class="box-card">
-   <div class=mask>
-    <header>新建分类</header>
-<section>
+
+ <el-card class="box-card">
+<div class=mask>
+    <header>新建分类  <i class="el-icon-close" @click="cancel" ></i></header>
+   <section>
 <div class="box">
     分类名称:
      <el-input
@@ -47,12 +48,13 @@ export default {
    props:['list'],
   data () {
     return {
-         input: '',
-         textarea3: '',
+        input: '',
+        textarea3: '',
         radio: '1',
         value: '',
         dialogTableVisible: false,
         dialogFormVisible: false,
+        centerDialogVisible: false
     }
   },
   
@@ -66,20 +68,50 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='less'>
-
-
-header{
-    text-align: center
+//弹出层遮罩
+.hello{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.05);
+    .box-card{
+     position: relative;
+     margin: 60px auto;
+     top:50%;
+     margin-top: -25%;
+     width: 500px;
+     height: 400px;
+      
+ 
 }
 
+}
+//头部字体居中
+header{
+    text-align: center;
+}
+//关闭的按钮
+.el-icon-close{
+  float: right;
+}
+//卡片的宽度高度
+
+.el-input__inner{
+  width: 60px;
+}
 .box{
     margin: 20px 5px;
-   .el-input__inner{
-    width: 100px;
-}
-    
-}
+   
+  }
 footer{
     float: right
 }
 </style>
+<style>
+
+</style>
+

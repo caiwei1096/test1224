@@ -19,42 +19,46 @@ export default new Router({
       path: '/',
       name: '导航一',
       iconCls: 'el-icon-message',//图标样式class
-      component: Home ,
-      children:[
+      component: Home,
+      children: [
         {
           path: '/index',
           name: '首页',
           component: Index1,
-          hidden: true 
-      },
-       {
+          hidden: true
+        },
+        {
           path: '/good',
           name: '商品',
           component: Goods,
-          children:[
-           {
-             path:'/good/all',
-             name:'all',
-             component:All
-           },
-           {
-             path:'/good/little',
-             name:'little',
-             component:Little,
+          children: [
+            {
+              path: '/good',
+              redirect: '/good/all'
             },
             {
-              path:'/good/none',
-              name:'none',
-              component:None,
+              path: '/good/all',
+              name: 'all',
+              component: All
             },
             {
-              path:'/good/delete',
-              name:'delete',
-              component:Delete
+              path: '/good/little',
+              name: 'little',
+              component: Little,
+            },
+            {
+              path: '/good/none',
+              name: 'none',
+              component: None,
+            },
+            {
+              path: '/good/delete',
+              name: 'delete',
+              component: Delete
             }
           ]
-      }
+        }
       ]
     }]
-  
+
 })

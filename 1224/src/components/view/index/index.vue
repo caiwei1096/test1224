@@ -1,16 +1,12 @@
 <template>
-  <div id="app">
-   
-   首页
-  </div>
+  <div id="app">首页</div>
 </template>
 
 <script>
 export default {
-  name: 'index'
-}
+  name: "index"
+};
 </script>
 
 <style>
-
 </style>

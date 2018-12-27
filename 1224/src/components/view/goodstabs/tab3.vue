@@ -1,24 +1,17 @@
 <template>
-  <div class="hello">
-   已下架
-  </div>
+  <div class="hello">已下架</div>
 </template>
 
 <script>
 export default {
-  name: 'delete',
-  data () {
-    return {
-     
-    }
+  name: "delete",
+  data() {
+    return {};
   },
-  methods:{
-
-  }
-}
+  methods: {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

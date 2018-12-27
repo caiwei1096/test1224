@@ -1,24 +1,17 @@
 <template>
-  <div class="hello">
-   库存不足
-  </div>
+  <div class="hello">库存不足</div>
 </template>
 
 <script>
 export default {
-  name: 'little',
-  data () {
-    return {
-     
-    }
+  name: "little",
+  data() {
+    return {};
   },
-  methods:{
-
-  }
-}
+  methods: {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

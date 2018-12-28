@@ -74,15 +74,20 @@ export default {
 </script>
 
 <style lang='less'>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  min-height: 400px;
-}
 .main {
   display: flex;
   width: 100%;
   .content-container {
     flex: 1;
   }
+}
+</style>
+<style>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 130px;
+    min-height: 400px;
+}
+.el-submenu .el-menu-item {
+    min-width: 130px;
 }
 </style>

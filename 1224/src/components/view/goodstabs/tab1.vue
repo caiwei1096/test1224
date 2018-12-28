@@ -2,32 +2,41 @@
   <div class="hello">
     <div class="boxright">
       <el-button-group>
-        <el-button size="mini">沽清</el-button>
-        <el-button size="mini">置满</el-button>
-        <el-button size="mini">修改库存</el-button>
-        <el-button size="mini">上架</el-button>
-        <el-button size="mini">下架</el-button>
-        <el-button size="mini">删除</el-button>
-        <el-select v-model="value" placeholder="更多" size="mini">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
+        <el-button
+          size="mini"
+          v-for="(val,index) in listone"
+          :key="index"
+          @click="change(index)"
+        >{{val.name}}</el-button>
+        <el-dropdown trigger="click">
+          <el-button size="mini">
+            更多
+            <i class="el-icon-caret-bottom"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>修改规格</el-dropdown-item>
+            <el-dropdown-item>修改属性</el-dropdown-item>
+            <el-dropdown-item>修改餐盒费</el-dropdown-item>
+            <el-dropdown-item>移动分类</el-dropdown-item>
+            <el-dropdown-item>修改售卖时间</el-dropdown-item>
+            <el-dropdown-item>修改商品描述</el-dropdown-item>
+            <el-dropdown-item>修改最小购买量和单位</el-dropdown-item>
+            <el-dropdown-item>修改套餐设置</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </el-button-group>
+
       <el-button-group>
         <el-button size="small" type="primary">排序管理</el-button>
-        <el-select v-model="value" placeholder="新建商品" size="small">
-          <el-option
-            v-for="item in options1"
-            :key="item.value1"
-            :label="item.label"
-            :value="item.value1"
-          ></el-option>
-        </el-select>
+        <el-dropdown trigger="click">
+          <el-button size="mini">新建商品</el-button>
+          <el-dropdown-menu slot="dropdown" width="100px">
+            <el-dropdown-item>填写商品信息</el-dropdown-item>
+            <el-dropdown-item>极速录菜</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </el-button-group>
+
       <div class="selectbox">
         <el-table
           ref="multipleTable"
@@ -36,7 +45,7 @@
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column type="selection" width="55">1</el-table-column>
           <el-table-column label="商品" width="120">
             <template slot-scope="scope">{{ scope.row.date }}</template>
           </el-table-column>
@@ -45,8 +54,14 @@
           <el-table-column label="操作" show-overflow-tooltip>
             <template slot-scope="scope">
               <el-button size="mini" type="text" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-              <el-button size="mini" type="text"  @click="handleDelete(scope.$index, scope.row)">下架</el-button>
-              <el-button size="mini" type="text"  @click="handleEdit(scope.$index, scope.row)">更多</el-button>
+              <el-button size="mini" type="text" @click="handleDelete(scope.$index, scope.row)">下架</el-button>
+              <el-dropdown trigger="click">
+                <el-button size="mini" type="text">更多</el-button>
+                <el-dropdown-menu slot="dropdown" width="100px">
+                  <el-dropdown-item>创建活动</el-dropdown-item>
+                  <el-dropdown-item>删除</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
             </template>
           </el-table-column>
         </el-table>
@@ -54,7 +69,6 @@
     </div>
 
     <div class="box" v-show="!flag">
-      
       <el-tabs :tab-position="tabPosition" style="height: 300px;">
         <el-tab-pane v-for="(val,index) in list" :label="val.lable" :key="index">
           <div>{{val.name}}</div>
@@ -68,12 +82,22 @@
 
 <script>
 import child from "./mask.vue";
+// import alertlot from '@/common/alertlot.vue'
 export default {
   name: "all",
   data() {
     return {
+      listone: [
+        { name: "沽清" },
+        { name: "置满" },
+        { name: "修改库存" },
+        { name: "上架" },
+        { name: "下架" },
+        { name: "删除" }
+      ],
       tabPosition: "left",
       flag: false,
+      flag1: false,
       checked: true,
       options: [
         {
@@ -118,8 +142,14 @@ export default {
       ],
       tableData: [
         {
-          date: "商品",
+          date: "面包",
           price: "11￥",
+          stock: "库存",
+          handle: "操作"
+        },
+        {
+          date: "橘子",
+          price: "12￥",
           stock: "库存",
           handle: "操作"
         }
@@ -129,10 +159,53 @@ export default {
   },
   components: {
     child
+    // alertlot
   },
   methods: {
+    //控制蒙层的显示隐藏
     fn(val) {
       this.flag = val;
+    },
+    fn1(val) {
+      this.flag1 = val;
+    },
+    //点击沽清、置满、修改库存、上架、下架、删除 提示无可选择的商品
+    change(index) {
+    console.log(index,'index',this.listone[index].name)
+      //判断this.multipleSelection.length长度 勾选的个数就是这个长度
+      if (!this.multipleSelection.length) {
+        const h = this.$createElement;
+        this.$message({
+          message: "请选择商品",
+          type: "warning",
+          center: true,
+          showClose: true
+        });
+      } else {
+      
+          this.$confirm(
+            "确认把已选的"+`${this.multipleSelection.length}`+"个商品" + `${this.listone[index].name}` + "库存吗?",
+            "批量" + `${this.listone[index].name}`,
+            {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }
+          )
+            .then(() => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "已取消删除"
+              });
+            });
+        }
+      
     },
     //选择多行数据时使用 Checkbox方法
     toggleSelection(rows) {
@@ -147,14 +220,16 @@ export default {
     //选择多行数据时使用 Checkbox方法
     handleSelectionChange(val) {
       this.multipleSelection = val;
+      console.log(this.multipleSelection.length);
+      //如果是空数组代表没有勾选复选框
     },
     //编辑下架更多
     handleEdit(index, row) {
-        console.log(index, row);
-      },
-      handleDelete(index, row) {
-        console.log(index, row);
-      }
+      console.log(index, row);
+    },
+    handleDelete(index, row) {
+      console.log(index, row);
+    }
   }
 };
 </script>
@@ -162,25 +237,21 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='less'>
 .hello {
-  
   .boxright {
-    overflow:scroll  ;overflow:auto;
     position: absolute;
     top: 60px;
-    margin: 15px 15px ;
+    margin: 15px 15px;
     padding-left: 150px;
- 
+
     .selectbox {
       margin-top: 15px;
     }
-  
-}
+  }
 }
 //选项卡的位置
 .box {
   margin-top: 100px;
-  position:  absolute;;
-
+  position: absolute;
 }
 //蒙层的位置
 .mask {
@@ -204,12 +275,20 @@ export default {
 .el-button {
   height: 28px;
 }
-.el-button--small,
-.el-button--small.is-round {
-  margin: 0 20px;
-}
+
 .el-button-group > .el-button:first-child {
   border-radius: 1;
+}
+
+.el-button-group > .el-dropdown > .el-button {
+  border-top-left-radius: 1;
+  border-bottom-left-radius: 4;
+  border-left-color: #dcdfe6;
+}
+
+.el-button-group > .el-button:first-child {
+  border-top-right-radius: 1;
+  border-bottom-right-radius: 1;
 }
 </style>
 

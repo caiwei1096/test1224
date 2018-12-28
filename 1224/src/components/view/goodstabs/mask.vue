@@ -72,7 +72,7 @@ export default {
 .hello{
     position: fixed;
     top: 0;
-    left: 0;
+    left: 138px;
     right: 0;
     bottom: 0;
     width: 100%;
@@ -80,11 +80,12 @@ export default {
     background: rgba(0,0,0,0.05);
     .box-card{
      position: relative;
-     margin: 60px auto;
-     top:50%;
-     margin-top: -25%;
+    //  left:200px ;
+     margin: 0 auto;//左右居中
      width: 500px;
      height: 400px;
+     top:50%;
+     margin-top: -200px;
       
  
 }

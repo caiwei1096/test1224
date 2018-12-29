@@ -7,10 +7,11 @@
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="/good/all">全部商品</el-menu-item>
+    <el-menu-item v-for="(val,index) in list" :index='val.index' :key=index>{{val.name}}({{val.count}})</el-menu-item>
+      <!-- <el-menu-item index="/good/all">全部商品{{}}</el-menu-item>
       <el-menu-item index="/good/little">库存不足</el-menu-item>
       <el-menu-item index="/good/none">已下架</el-menu-item>
-      <el-menu-item index="/good/delete">废除</el-menu-item>
+      <el-menu-item index="/good/delete">废除</el-menu-item> -->
     </el-menu>
 
     <div class="line"></div>
@@ -33,13 +34,16 @@ export default {
     return {
       activeIndex: "1",
       list: [
-        { name: "全部商品", index: "1" },
-        { name: "库存不足", index: 2 },
-        { name: "已下架", index: 3 },
-        { name: "废除", index: 4 }
+        { name: "全部商品", index: 'all',count:this.$store.getters.allcount},
+        { name: "库存不足", index: 'little',count:this.$store.getters.lowstocks},
+        { name: "已下架", index: 'none', },
+        { name: "废除", index: 'delete'}
       ]
     };
   },
+  // computed:{
+  //    count:
+  // },
   methods: {
     handleSelect(key, keyPath) {}
   }
@@ -47,4 +51,7 @@ export default {
 </script>
 
 <style>
+.el-menu--horizontal{
+  width: 671px;
+}
 </style>

@@ -7,7 +7,8 @@
           v-for="(val,index) in listone"
           :key="index"
           @click="change(index)"
-        >{{val.name}}</el-button>
+        >{{val.name}}
+        </el-button>
         <el-dropdown trigger="click">
           <el-button size="mini">
             更多
@@ -25,8 +26,9 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-button-group>
-
-      <el-button-group>
+     
+  
+          <el-button-group>
         <el-button size="small" type="primary">排序管理</el-button>
         <el-dropdown trigger="click">
           <el-button size="mini">新建商品</el-button>
@@ -36,6 +38,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-button-group>
+ 
 
       <div class="selectbox">
         <el-table
@@ -140,26 +143,18 @@ export default {
         { name: "经典蛋糕", lable: "经典蛋糕", value: "选项4" },
         { name: "礼券", lable: "礼券", value: "选项5" }
       ],
-      tableData: [
-        {
-          date: "面包",
-          price: "11￥",
-          stock: "库存",
-          handle: "操作"
-        },
-        {
-          date: "橘子",
-          price: "12￥",
-          stock: "库存",
-          handle: "操作"
-        }
-      ],
       multipleSelection: []
     };
   },
   components: {
     child
     // alertlot
+  },
+  computed: {
+    //计算table商品数据
+    tableData() {
+      return this.$store.state.goods.tableData;
+    }
   },
   methods: {
     //控制蒙层的显示隐藏
@@ -171,7 +166,7 @@ export default {
     },
     //点击沽清、置满、修改库存、上架、下架、删除 提示无可选择的商品
     change(index) {
-    console.log(index,'index',this.listone[index].name)
+      // console.log(index, "index", this.listone[index].name);
       //判断this.multipleSelection.length长度 勾选的个数就是这个长度
       if (!this.multipleSelection.length) {
         const h = this.$createElement;
@@ -182,30 +177,40 @@ export default {
           showClose: true
         });
       } else {
-      
-          this.$confirm(
-            "确认把已选的"+`${this.multipleSelection.length}`+"个商品" + `${this.listone[index].name}` + "库存吗?",
-            "批量" + `${this.listone[index].name}`,
-            {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning"
-            }
-          )
-            .then(() => {
-              this.$message({
-                type: "success",
-                message: "删除成功!"
-              });
-            })
-            .catch(() => {
-              this.$message({
-                type: "info",
-                message: "已取消删除"
-              });
+         console.log(index,'index')
+         if(index==0||1){
+this.$confirm(
+          "确认把已选的" +
+            `${this.multipleSelection.length}` +
+            "个商品" +
+            `${this.listone[index].name}` +
+            "库存吗?",
+          "批量" + `${this.listone[index].name}`,
+          {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }
+        )
+          .then(() => {
+            this.$message({
+              type: "success",
+              message: "删除成功!"
             });
-        }
-      
+            
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除"
+            });
+          });
+         }
+         if(index==2){
+          
+         }
+        
+      }
     },
     //选择多行数据时使用 Checkbox方法
     toggleSelection(rows) {
@@ -220,7 +225,7 @@ export default {
     //选择多行数据时使用 Checkbox方法
     handleSelectionChange(val) {
       this.multipleSelection = val;
-      console.log(this.multipleSelection.length);
+      // console.log(this.multipleSelection.length);
       //如果是空数组代表没有勾选复选框
     },
     //编辑下架更多
@@ -242,8 +247,8 @@ export default {
     top: 60px;
     margin: 15px 15px;
     padding-left: 150px;
-
-    .selectbox {
+   
+.selectbox {
       margin-top: 15px;
     }
   }
@@ -290,5 +295,11 @@ export default {
   border-top-right-radius: 1;
   border-bottom-right-radius: 1;
 }
+.el-button-group {
+    vertical-align: middle;
+    float: left;
+   
+}
+
 </style>
 
